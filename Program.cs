@@ -13,13 +13,21 @@ if (!string.IsNullOrEmpty(databaseUrl))
 {
     try
     {
-        var connectionStringBuilder = new NpgsqlConnectionStringBuilder(databaseUrl)
+        var uri = new Uri(databaseUrl);
+        var userInfo = uri.UserInfo.Split(':');
+        var connectionString = new NpgsqlConnectionStringBuilder
         {
+            Host = uri.Host,
+            Port = uri.Port,
+            Database = uri.AbsolutePath.Trim('/'),
+            Username = userInfo[0],
+            Password = userInfo[1],
             SslMode = SslMode.Prefer,
             TrustServerCertificate = true
-        };
+        }.ToString();
+
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(connectionStringBuilder.ToString()));
+            options.UseNpgsql(connectionString));
     }
     catch (Exception ex)
     {
