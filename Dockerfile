@@ -6,8 +6,8 @@ EXPOSE 80
 # Usar la imagen oficial de .NET SDK para compilar la aplicación
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY ["SistemaAdopcionMascotas/SistemaAdopcionMascotas.csproj", "SistemaAdopcionMascotas/"]
-RUN dotnet restore "SistemaAdopcionMascotas/SistemaAdopcionMascotas.csproj"
+COPY SistemaAdopcionMascotas/SistemaAdopcionMascotas.csproj ./
+RUN dotnet restore "SistemaAdopcionMascotas.csproj"
 COPY . .
 WORKDIR "/src/SistemaAdopcionMascotas"
 RUN dotnet build "SistemaAdopcionMascotas.csproj" -c Release -o /app/build
