@@ -1,0 +1,40 @@
+@model SistemaAdopcionMascotas.Models.Mascota
+
+@{
+    ViewData["Title"] = "Registrar Mascota";
+}
+
+<h1>Registrar Mascota</h1>
+
+<form asp-action="Crear" method="post">
+    <div class="form-group">
+        <label for="Nombre">Nombre de la Mascota</label>
+        <input type="text" class="form-control" id="Nombre" name="Nombre" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Edad">Edad</label>
+        <input type="number" class="form-control" id="Edad" name="Edad" min="0" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Tipo">Tipo</label>
+        <select class="form-control" id="Tipo" name="Tipo" required>
+            <option value="">Seleccione un tipo</option>
+            <option value="Perro">Perro</option>
+            <option value="Gato">Gato</option>
+            <option value="Otro">Otro</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="EstadoAdopcion">Estado de Adopción</label>
+        <select class="form-control" id="EstadoAdopcion" name="EstadoAdopcion" required>
+            <option value="">Seleccione un estado</option>
+            <option value="Disponible">Disponible</option>
+            <option value="Adoptada">Adoptada</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar</button>
+</form>
