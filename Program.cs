@@ -1,14 +1,30 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaAdopcionMascotas.Models;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Register ApplicationDbContext with PostgreSQL connection string
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Leer la variable DATABASE_URL y convertirla en una cadena de conexión
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+if (!string.IsNullOrEmpty(databaseUrl))
+{
+    var connectionStringBuilder = new NpgsqlConnectionStringBuilder(databaseUrl)
+    {
+        SslMode = SslMode.Prefer,
+        TrustServerCertificate = true
+    };
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(connectionStringBuilder.ToString()));
+}
+else
+{
+    // Usar la configuración predeterminada de appsettings.json si DATABASE_URL no está configurada
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
 var app = builder.Build();
 
