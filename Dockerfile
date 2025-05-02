@@ -1,23 +1,30 @@
-# Usar la imagen oficial de .NET como base
+# Etapa base de runtime con ASP.NET
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-# Usar la imagen oficial de .NET SDK para compilar la aplicación
+# Etapa de build con SDK
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY ["SistemaAdopcionMascotas.csproj", "./"]
-RUN dotnet restore "SistemaAdopcionMascotas.csproj"
-COPY . .
-WORKDIR "/src/SistemaAdopcionMascotas"
-RUN dotnet build "SistemaAdopcionMascotas.csproj" -c Release -o /app/build
 
-# Publicar la aplicación
+# Copiar solo el archivo del proyecto primero (mejora la cache de Docker)
+COPY SistemaAdopcionMascotas.csproj ./
+RUN dotnet restore
+
+# Luego copiar el resto del código
+COPY . ./
+
+# Compilar en modo Release
+RUN dotnet build -c Release -o /app/build
+
+# Etapa de publicación
 FROM build AS publish
-RUN dotnet publish "SistemaAdopcionMascotas.csproj" -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
-# Configurar el entorno de producción
+# Imagen final de runtime
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Comando de arranque
 ENTRYPOINT ["dotnet", "SistemaAdopcionMascotas.dll"]
