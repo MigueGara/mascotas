@@ -9,18 +9,18 @@ namespace SistemaAdopcionMascotas.Models
         public int Id { get; set; }
 
         [Required]
-        public string Nombre { get; set; }
+        public required string Nombre { get; set; }
 
         [Range(0, int.MaxValue)]
         public int Edad { get; set; }
 
         [Required]
-        public string Tipo { get; set; }
+        public required string Tipo { get; set; }
 
         [Required]
-        public string EstadoAdopcion { get; set; } // Disponible / Adoptada
+        public required string EstadoAdopcion { get; set; } // Disponible / Adoptada
 
-        public Adopcion Adopcion { get; set; }
+        public Adopcion? Adopcion { get; set; }
     }
 
     public class Adoptante
@@ -29,12 +29,12 @@ namespace SistemaAdopcionMascotas.Models
         public int Id { get; set; }
 
         [Required]
-        public string Nombre { get; set; }
+        public required string Nombre { get; set; }
 
         [Required]
-        public string Contacto { get; set; }
+        public required string Contacto { get; set; }
 
-        public ICollection<Adopcion> Adopciones { get; set; }
+        public ICollection<Adopcion> Adopciones { get; set; } = new List<Adopcion>();
     }
 
     public class Adopcion
@@ -44,10 +44,10 @@ namespace SistemaAdopcionMascotas.Models
 
         [ForeignKey("Mascota")]
         public int MascotaId { get; set; }
-        public Mascota Mascota { get; set; }
+        public required Mascota Mascota { get; set; }
 
         [ForeignKey("Adoptante")]
         public int AdoptanteId { get; set; }
-        public Adoptante Adoptante { get; set; }
+        public required Adoptante Adoptante { get; set; }
     }
 }
