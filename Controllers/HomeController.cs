@@ -29,3 +29,31 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
+
+public class MascotasController : Controller
+{
+    private readonly ApplicationDbContext _context;
+
+    public MascotasController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    [HttpGet]
+    public IActionResult Crear()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Crear(Mascota mascota)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Mascotas.Add(mascota);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+        return View(mascota);
+    }
+}
