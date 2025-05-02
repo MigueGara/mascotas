@@ -11,17 +11,25 @@ builder.Services.AddControllersWithViews();
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 if (!string.IsNullOrEmpty(databaseUrl))
 {
-    var connectionStringBuilder = new NpgsqlConnectionStringBuilder(databaseUrl)
+    try
     {
-        SslMode = SslMode.Prefer,
-        TrustServerCertificate = true
-    };
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(connectionStringBuilder.ToString()));
+        var connectionStringBuilder = new NpgsqlConnectionStringBuilder(databaseUrl)
+        {
+            SslMode = SslMode.Prefer,
+            TrustServerCertificate = true
+        };
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(connectionStringBuilder.ToString()));
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error al procesar DATABASE_URL: {ex.Message}");
+        throw;
+    }
 }
 else
 {
-    // Usar la configuración predeterminada de appsettings.json si DATABASE_URL no está configurada
+    Console.WriteLine("DATABASE_URL no está configurada. Usando la configuración predeterminada de appsettings.json.");
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 }
