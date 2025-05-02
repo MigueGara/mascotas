@@ -2,8 +2,8 @@ namespace SistemaAdopcionMascotas.Models
 {
     public class ListarAdopcionesViewModel
     {
-        public string Mascota { get; set; }
-        public string Adoptante { get; set; }
-        public string EstadoAdopcion { get; set; }
+        public required string Mascota { get; set; }
+        public required string Adoptante { get; set; }
+        public required string EstadoAdopcion { get; set; }
     }
 }
