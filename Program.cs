@@ -9,16 +9,21 @@ builder.Services.AddControllersWithViews();
 
 // Leer la variable DATABASE_URL y convertirla en una cadena de conexión
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
 if (!string.IsNullOrEmpty(databaseUrl))
 {
     try
     {
+        Console.WriteLine($"DATABASE_URL = {databaseUrl}"); // Mostrar la URL leída
+
         var uri = new Uri(databaseUrl);
         var userInfo = uri.UserInfo.Split(':');
+        var port = uri.Port != -1 ? uri.Port : 5432; // Usar puerto 5432 si no se especifica
+
         var connectionString = new NpgsqlConnectionStringBuilder
         {
             Host = uri.Host,
-            Port = uri.Port,
+            Port = port,
             Database = uri.AbsolutePath.Trim('/'),
             Username = userInfo[0],
             Password = userInfo[1],
@@ -48,13 +53,11 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapStaticAssets();
