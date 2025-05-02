@@ -36,8 +36,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Tottus Electro/Desktop/proyecto/SistemaAdopcionMascotas/Views/Mascotas/AsignarAdoptante.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFzY290YXNcQXNpZ25hckFkb3B0YW50ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tottus Electro/Desktop/proyecto/SistemaAdopcionMascotas/Views/Mascotas/Crear.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFzY290YXNcQ3JlYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tottus Electro/Desktop/proyecto/SistemaAdopcionMascotas/Views/Mascotas/ListarAdopciones.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFzY290YXNcTGlzdGFyQWRvcGNpb25lcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Tottus Electro/Desktop/proyecto/SistemaAdopcionMascotas/Views/Shared/Error.cshtml]

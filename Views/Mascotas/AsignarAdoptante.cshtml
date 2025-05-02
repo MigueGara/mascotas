@@ -1,0 +1,32 @@
+@model SistemaAdopcionMascotas.Models.Mascota
+
+@{
+    ViewData["Title"] = "Asignar Adoptante";
+}
+
+<h1>Asignar Adoptante</h1>
+
+<form asp-action="AsignarAdoptante" method="post">
+    <div class="form-group">
+        <label for="MascotaId">Seleccione una Mascota</label>
+        <select class="form-control" id="MascotaId" name="mascotaId" required>
+            <option value="">Seleccione una mascota</option>
+            @foreach (var mascota in ViewBag.MascotasDisponibles)
+            {
+                <option value="@mascota.Id">@mascota.Nombre (@mascota.Tipo)</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="NombreAdoptante">Nombre del Adoptante</label>
+        <input type="text" class="form-control" id="NombreAdoptante" name="nombreAdoptante" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ContactoAdoptante">Contacto del Adoptante</label>
+        <input type="text" class="form-control" id="ContactoAdoptante" name="contactoAdoptante" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Asignar</button>
+</form>

@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Listado de Adopciones";
+}
+
+<h1>Listado de Adopciones</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre de la Mascota</th>
+            <th>Nombre del Adoptante</th>
+            <th>Estado de Adopción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var adopcion in Model)
+        {
+            <tr>
+                <td>@adopcion.Mascota</td>
+                <td>@adopcion.Adoptante</td>
+                <td>@adopcion.EstadoAdopcion</td>
+            </tr>
+        }
+    </tbody>
+</table>
